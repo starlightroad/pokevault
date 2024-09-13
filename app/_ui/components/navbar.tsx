@@ -34,21 +34,23 @@ function GitHubLink() {
 
 export default function Navbar() {
   return (
-    <header className="fixed top-3 flex h-14 w-full items-center justify-between rounded-2xl border bg-white px-5">
-      <nav>
-        <Link href="/" className="flex items-center gap-1">
-          <Image src="/static/poke-ball.png" width={30} height={30} alt="App logo" />
-          <span className="text-sm font-medium text-slate-600">PokeVault</span>
-        </Link>
-      </nav>
-      <NavbarList>
-        <NavbarListItem>
-          <ThemeButton />
-        </NavbarListItem>
-        <NavbarListItem>
-          <GitHubLink />
-        </NavbarListItem>
-      </NavbarList>
-    </header>
+    <div className="sticky top-3">
+      <header className="absolute flex h-14 w-full items-center justify-between rounded-2xl border bg-white px-5">
+        <nav>
+          <Link href="/" className="flex items-center gap-1">
+            <Image src="/static/poke-ball.png" width={30} height={30} alt="App logo" />
+            <span className="text-sm font-medium text-slate-600">PokeVault</span>
+          </Link>
+        </nav>
+        <NavbarList>
+          <NavbarListItem>
+            <ThemeButton />
+          </NavbarListItem>
+          <NavbarListItem>
+            <GitHubLink />
+          </NavbarListItem>
+        </NavbarList>
+      </header>
+    </div>
   );
 }
