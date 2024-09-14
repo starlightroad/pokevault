@@ -22,7 +22,7 @@ export const fetchOnePokemon = async (pokemonId: number) => {
 
   try {
     const response = await fetch(requestUrl);
-    const data = response.json();
+    const data = await response.json();
 
     return data;
   } catch (error) {
