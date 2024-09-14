@@ -1,8 +1,11 @@
 import { POKE_API_V2_URL } from '@/app/_lib/constants';
 import type { NamedAPIResourceList } from '@/app/_lib/definitions';
 
-export const fetchPokemon = async (limit = 8) => {
-  const requestUrl = `${POKE_API_V2_URL}/pokemon?limit=${limit}`;
+export const fetchPokemon = async (limit = 8, offset?: number) => {
+  const requestUrl = new URL(`${POKE_API_V2_URL}/pokemon`);
+
+  if (limit) requestUrl.searchParams.set('limit', limit.toString());
+  if (offset) requestUrl.searchParams.set('offset', offset.toString());
 
   try {
     const response = await fetch(requestUrl);

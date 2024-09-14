@@ -1,4 +1,4 @@
-import { POKE_ASSETS_URL } from '@/app/_lib/constants';
+import { ELLIPSIS, POKE_ASSETS_URL, POKEMON_PER_PAGE } from '@/app/_lib/constants';
 
 export const padPokemonId = (id: number, maxLength = 4) => {
   return id.toString().padStart(maxLength, '0');
@@ -23,4 +23,28 @@ export const getPokemonIdFromUrlInResourceList = (url: string) => {
   const [_, id] = regularExpressionArray;
 
   return id;
+};
+
+export const generatePagination = (currentPage: number, totalPages: number) => {
+  if (totalPages <= 7) {
+    return Array.from({ length: totalPages }, (_, idx) => idx + 1);
+  }
+
+  if (currentPage <= 4) {
+    return [1, 2, 3, 4, 5, ELLIPSIS, totalPages];
+  }
+
+  if (currentPage >= totalPages - 4) {
+    return [
+      1,
+      ELLIPSIS,
+      totalPages - 4,
+      totalPages - 3,
+      totalPages - 2,
+      totalPages - 1,
+      totalPages,
+    ];
+  }
+
+  return [1, ELLIPSIS, currentPage - 1, currentPage, currentPage + 1, ELLIPSIS, totalPages];
 };
