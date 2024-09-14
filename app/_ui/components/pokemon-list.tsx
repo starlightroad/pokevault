@@ -1,19 +1,40 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import clsx from 'clsx';
+import type { Pokemon } from '@/app/_lib/definitions';
 import { Card, CardFooter } from '@/app/_ui/components/core/card';
 import Badge from '@/app/_ui/components/core/badge';
-import {
-  generatePokemonAssetUrl,
-  getPokemonIdFromUrlInResourceList,
-  padPokemonId,
-} from '@/app/_lib/utils';
 import { fetchPokemon } from '@/app/_data/pokemon';
+import { generatePokemonAssetUrl, getPokemonTypeColors, padPokemonId } from '@/app/_lib/utils';
+
+function PokemonTypeBadgesList({ data }: { data: Pokemon }) {
+  return (
+    <div className="flex items-center justify-center space-x-1">
+      {data.types.map((type) => {
+        const key = `${data.species.name}-type-${type.type.name}`;
+        const { backgroundColor, textColor } = getPokemonTypeColors(type.type.name);
+
+        const classes = clsx(
+          'rounded-xl px-2 py-0.5 text-xs capitalize',
+          backgroundColor,
+          textColor,
+        );
+
+        return (
+          <span key={key} className={classes}>
+            {type.type.name}
+          </span>
+        );
+      })}
+    </div>
+  );
+}
 
 type Props = {
   pokemonData: Awaited<ReturnType<typeof fetchPokemon>>;
 };
 
-export default function PokemonList({ pokemonData }: Props) {
+export default async function PokemonList({ pokemonData }: Props) {
   if (!pokemonData.results.length) {
     return (
       <div className="px-3 md:px-5">
@@ -22,10 +43,13 @@ export default function PokemonList({ pokemonData }: Props) {
     );
   }
 
+  const pokemonResponses = await Promise.all(pokemonData.results.map((data) => fetch(data.url)));
+  const resolvedData: Pokemon[] = await Promise.all(pokemonResponses.map((res) => res.json()));
+
   return (
     <ul className="grid gap-5 pt-2 sm:grid-cols-2 md:grid-cols-4">
-      {pokemonData.results.map((data) => {
-        const pokemonId = getPokemonIdFromUrlInResourceList(data.url);
+      {resolvedData.map((data) => {
+        const pokemonId = data.id;
         const pokemonUrlHref = `/pokemon/${pokemonId}`;
 
         const badgeValue = padPokemonId(Number(pokemonId));
@@ -37,11 +61,12 @@ export default function PokemonList({ pokemonData }: Props) {
         return (
           <li key={key}>
             <Link href={pokemonUrlHref} className="block rounded-2xl">
-              <Card>
-                <Badge>#{badgeValue}</Badge>
+              <Card className="bg-white">
+                <Badge className="px-1 py-0.5 text-xs text-slate-700">{badgeValue}</Badge>
                 <Image src={imageUrl} width={215} height={215} alt="Monster" />
                 <CardFooter>
-                  <p className="text-sm font-medium capitalize">{data.name}</p>
+                  <p className="mb-3 text-sm capitalize text-slate-700">{data.species.name}</p>
+                  <PokemonTypeBadgesList data={data} />
                 </CardFooter>
               </Card>
             </Link>
