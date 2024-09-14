@@ -48,3 +48,9 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
 
   return [1, ELLIPSIS, currentPage - 1, currentPage, currentPage + 1, ELLIPSIS, totalPages];
 };
+
+export const calculatePaginationOffset = (pageNumber: number) => {
+  const offsetValue = (pageNumber - 1) * POKEMON_PER_PAGE;
+
+  return pageNumber > 1 ? offsetValue : 0;
+};
