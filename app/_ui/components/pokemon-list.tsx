@@ -65,7 +65,7 @@ export default async function PokemonList({ pokemonData }: Props) {
                 <Badge className="px-2 py-1 text-xs text-slate-700">{badgeValue}</Badge>
                 <Image src={imageUrl} width={215} height={215} alt="Monster" className="mx-auto" />
                 <CardFooter>
-                  <p className="mb-3 text-sm capitalize text-slate-700">{data.species.name}</p>
+                  <p className="mb-3 font-medium capitalize text-slate-700">{data.species.name}</p>
                   <PokemonTypeBadgesList data={data} />
                 </CardFooter>
               </Card>
