@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.className} antialiased`}>
+      <body className={`${geistSans.className} bg-[#fafafa] antialiased`}>
         <Container>
           <Navbar />
           {children}
