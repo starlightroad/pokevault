@@ -63,7 +63,7 @@ export default async function PokemonList({ pokemonData }: Props) {
             <Link href={pokemonUrlHref} className="block rounded-2xl">
               <Card className="bg-white">
                 <Badge className="px-1 py-0.5 text-xs text-slate-700">{badgeValue}</Badge>
-                <Image src={imageUrl} width={215} height={215} alt="Monster" />
+                <Image src={imageUrl} width={215} height={215} alt="Monster" className="mx-auto" />
                 <CardFooter>
                   <p className="mb-3 text-sm capitalize text-slate-700">{data.species.name}</p>
                   <PokemonTypeBadgesList data={data} />
