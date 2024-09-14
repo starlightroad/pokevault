@@ -47,7 +47,7 @@ export default async function PokemonList({ pokemonData }: Props) {
   const resolvedData: Pokemon[] = await Promise.all(pokemonResponses.map((res) => res.json()));
 
   return (
-    <ul className="grid gap-5 pt-2 sm:grid-cols-2 md:grid-cols-4">
+    <ul className="grid gap-5 pt-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {resolvedData.map((data) => {
         const pokemonId = data.id;
         const pokemonUrlHref = `/pokemon/${pokemonId}`;
