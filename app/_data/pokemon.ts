@@ -16,3 +16,16 @@ export const fetchPokemon = async (limit = 8, offset?: number) => {
     throw new Error('Failed to Fetch All Pokemon.');
   }
 };
+
+export const fetchOnePokemon = async (pokemonId: number) => {
+  const requestUrl = `${POKE_API_V2_URL}/pokemon/${pokemonId}`;
+
+  try {
+    const response = await fetch(requestUrl);
+    const data = response.json();
+
+    return data;
+  } catch (error) {
+    throw new Error('Failed to Fetch One Pokemon.');
+  }
+};
